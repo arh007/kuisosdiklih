@@ -1,0 +1,305 @@
+:root {
+  --bg: #ffffff;          /* latar belakang terang */
+  --card: #fff7f6;        /* warna kartu lembut */
+  --accent: #e30613;      /* merah khas KPU */
+  --accent2: #ff9800;     /* oranye gradasi */
+  --muted: #6b7280;       /* abu teks */
+  --white: #111111;       /* teks utama gelap */
+  --danger: #b71c1c;      /* merah tua */
+  --success: #22c55e;     /* hijau jawaban benar */
+}
+
+/* Reset & global */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', Inter, system-ui, Segoe UI, Arial;
+  background: linear-gradient(180deg, #ffffff 0%, #ffe5e0 100%);
+  background-size: 200% 200%;
+  animation: bgMove 20s ease infinite;
+  color: var(--white);
+  margin: 0;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+header h1 {
+  font-size: 2.25rem;
+  margin: 0;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+header p {
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Card */
+.card {
+  background: var(--card);
+  padding: 18px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+  border-top: 4px solid var(--accent);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Input nama */
+input[type=text] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  color: #111;
+  margin: 12px 0;
+  transition: 0.2s;
+}
+
+input[type=text]:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* Row wrapper */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* Tombol */
+.btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: #fff;
+  border: none;
+}
+
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(227, 6, 19, 0.3);
+}
+
+.btn.danger {
+  background: #b71c1c;
+  color: #fff;
+  border: none;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Quiz Header */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+#timer {
+  background: var(--accent);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Pertanyaan */
+#question-box {
+  position: relative;
+}
+
+#question-box h3 {
+  margin: 0 0 12px 0;
+  color: #000;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.answer {
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.answer:hover {
+  background: #ffe5e0;
+  transform: scale(1.02);
+}
+
+/* Efek jawaban benar/salah */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.answer.correct {
+  background: rgba(34,197,94,0.12);
+  border-color: rgba(34,197,94,0.4);
+  animation: blink 0.5s ease 2;
+}
+
+.answer.wrong {
+  background: rgba(239,68,68,0.1);
+  border-color: rgba(239,68,68,0.4);
+  animation: shake 0.4s ease;
+}
+
+/* Animasi transisi soal */
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+.fade-out {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+/* Combo score */
+#combo-container {
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.combo-text {
+  position: relative;
+  display: inline-block;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(227, 6, 19, 0.4);
+  animation: comboPop 0.8s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes comboPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* Achievement styles */
+.achievement {
+  background: rgba(227, 6, 19, 0.1);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-align: center;
+  margin-top: 8px;
+  color: var(--accent);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Leaderboard */
+#leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#leaderboard-list li {
+  background: #fff;
+  color: #111;
+  margin-bottom: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 5px solid var(--accent);
+}
+
+/* Hasil kuis */
+#result-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  gap: 12px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 10px;
+  margin-top: auto;
+  color: var(--muted);
+}
+
+footer strong {
+  color: var(--accent);
+}
+
+/* Responsif */
+@media (max-width: 560px) {
+  .answers { grid-template-columns: 1fr; }
+}
