@@ -277,6 +277,19 @@ function tampilkanPapanSkor() {
   tampilkanLayar(layarPapanSkor);
   loadPapanSkorDariSpreadsheet(); // 🔥 ambil langsung dari Spreadsheet
 }
+// =================== SIMPAN SKOR ===================
+function simpanSkor() {
+  try {
+    const skorTersimpan = JSON.parse(localStorage.getItem(KEY_PENYIMPANAN)) || [];
+    skorTersimpan.push({ nama: namaPemain, skor: skor });
+    skorTersimpan.sort((a, b) => b.skor - a.skor);
+    localStorage.setItem(KEY_PENYIMPANAN, JSON.stringify(skorTersimpan));
+
+    console.log("💾 Skor tersimpan ke localStorage:", { nama: namaPemain, skor: skor });
+  } catch (err) {
+    console.error("⚠️ Gagal menyimpan skor:", err);
+  }
+}
 
 // =================== EVENT LISTENER ===================
 tombolMulai.addEventListener('click', mulaiKuis);
